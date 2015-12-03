@@ -5,6 +5,7 @@ This project uses TweetStream's library to query the public sample stream (aka "
 ```ruby
 gem install tweetstream #https://github.com/tweetstream/tweetstream
 gem install longurl #https://github.com/jakimowicz/longurl
+gem install parallel #https://github.com/grosser/parallel
 ```
 
 ## Config File
