@@ -15,6 +15,7 @@ Please add a `config.json` file to the root that looks like the example below.
   "CONSUMER_SECRET":"123456",
   "ACCESS_TOKEN":"abc123456",
   "ACCESS_TOKEN_SECRET":"98765",
-  "STOP_AFTER_MIN":0.05
+  "STOP_AFTER_MINUTES":0.5,
+  "NUM_OF_THREADS":16
 }
 ```
