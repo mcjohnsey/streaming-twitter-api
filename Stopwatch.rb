@@ -6,13 +6,13 @@ class Stopwatch
   end
 
   def elapsed_time
-    puts @stopwatch_name if !@stopwatch_name.nil?
+    # puts @stopwatch_name if !@stopwatch_name.nil?
     now = Time.now
     elapsed = now - @start
-    puts 'Started: ' + @start.to_s
-    puts 'Now: ' + now.to_s
-    puts 'Elapsed time: ' +  elapsed.to_s + ' seconds'
-    elapsed.to_s
+    # puts 'Started: ' + @start.to_s
+    # puts 'Now: ' + now.to_s
+    # puts 'Elapsed time: ' +  elapsed.to_s + ' seconds'
+    elapsed
   end
 
 end
