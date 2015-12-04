@@ -3,22 +3,23 @@ This project uses TweetStream's library to query the public sample stream (aka "
 
 ## Example Output
 ```
-Tweets captured: 29588
-Count of tweets containing a url: 6897
-Percent of tweets containing a url: 23.31%
-Tweets with instagram links: 218
-Percent of tweets with instagram links: 0.74%
+Tweets captured: 29028
+Avg tweets per second 48.38
+Count of tweets containing a url: 6592
+Percent of tweets containing a url: 22.71%
+Tweets with instagram links: 201
+Percent of tweets with instagram links: 0.69%
 Top 10 Domains:
-#1 - twitter.com - 1436
-#2 - bit.ly - 817
-#3 - goo.gl - 465
-#4 - fb.me - 359
-#5 - vine.co - 280
-#6 - www.instagram.com - 218
-#7 - youtu.be - 218
-#8 - ift.tt - 181
-#9 - dlvr.it - 149
-#10 - ow.ly - 119
+#1 - twitter.com - 1475
+#2 - bit.ly - 614
+#3 - goo.gl - 450
+#4 - fb.me - 273
+#5 - vine.co - 221
+#6 - youtu.be - 207
+#7 - www.instagram.com - 201
+#8 - ift.tt - 180
+#9 - dlvr.it - 144
+#10 - www.youtube.com - 86
 ```
 
 ## Gems Used
