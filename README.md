@@ -34,9 +34,8 @@ Please add a `config.json` file to the root that looks like the example below.
   "CONSUMER_SECRET":"0DZJnIMmAtMRj2MGWX8myJyBGgUkwV5YiJnTC9PcxH67qDpZmK",
   "ACCESS_TOKEN":"25465465-ITaRE7pqampyHav72QWU0BcKUZ0emChAWprIOlN9z",
   "ACCESS_TOKEN_SECRET":"xg9o6lSxhwG22jv4g3tStEMWKiPzKMxFqRSQe08vlLw41",
-  "STOP_AFTER_MINUTES":0.25
+  "STOP_AFTER_MINUTES":10
 }
-
 ```
 ## TODO
 1. Read this https://blog.engineyard.com/2013/ruby-concurrency
