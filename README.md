@@ -30,11 +30,11 @@ gem install tweetstream #https://github.com/tweetstream/tweetstream
 Please add a `config.json` file to the root that looks like the example below.
 ```json
 {
-  "CONSUMER_KEY":"TxjM9efBRwhyOp2Egm7ufWpO3",
-  "CONSUMER_SECRET":"0DZJnIMmAtMRj2MGWX8myJyBGgUkwV5YiJnTC9PcxH67qDpZmK",
-  "ACCESS_TOKEN":"25465465-ITaRE7pqampyHav72QWU0BcKUZ0emChAWprIOlN9z",
-  "ACCESS_TOKEN_SECRET":"xg9o6lSxhwG22jv4g3tStEMWKiPzKMxFqRSQe08vlLw41",
-  "STOP_AFTER_MINUTES":10
+  "CONSUMER_KEY":"ABCDEF123456",
+  "CONSUMER_SECRET":"1234567",
+  "ACCESS_TOKEN":"abcdef12345",
+  "ACCESS_TOKEN_SECRET":"98765",
+  "STOP_AFTER_MINUTES":0.10
 }
 ```
 ## TODO
