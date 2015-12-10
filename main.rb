@@ -2,6 +2,7 @@ require 'tweetstream'
 require 'uri'
 require 'json'
 require_relative 'stopwatch'
+require_relative 'tweet'
 
 DEBUGGING = true
 CONFIG_FILE_LOCATION = 'config.json'
@@ -21,6 +22,8 @@ ACCESS_TOKEN_SECRET = config['ACCESS_TOKEN_SECRET']
 STOP_AFTER_MINUTES = config['STOP_AFTER_MINUTES']
 STOP_AFTER_SECONDS = STOP_AFTER_MINUTES * 60
 
+tweets = []
+
 # start stream gather
 TweetStream.configure do |config|
   config.consumer_key       = CONSUMER_KEY
@@ -29,8 +32,6 @@ TweetStream.configure do |config|
   config.oauth_token_secret = ACCESS_TOKEN_SECRET
   config.auth_method        = :oauth
 end
-
-statuses = []
 
 stream_catcher = Stopwatch.new('stream_catcher')
 EM.run do
@@ -41,8 +42,8 @@ EM.run do
   end
 
   client.sample do |tweet|
-    statuses << tweet
-    # client.stop if @statuses.size >= 100000 #stops after a certain amount of tweets collected
+    tweets << Tweet.new(tweet.text,tweet.uris.map { |uri|  uri.expanded_url})
+    client.stop if tweets.size >= 1000 #stops after a certain amount of tweets collected
   end
 
   EM::Timer.new(STOP_AFTER_SECONDS) do
@@ -52,43 +53,42 @@ end
 
 secs_reading_the_stream = stream_catcher.elapsed_time.to_i
 
-url_processor = Stopwatch.new('url_processor')
+def print_top_10_domains(tweets)
+  print_debug 'Top 10 Domains:'
 
-url_count_h = Hash.new(0)
+  # grab all the count hashes from the tweets
+  count_hashes = tweets.map{|tweet| tweet.url_count_hash}
 
-tweets_with_uri_counts = 0
-tweets_with_instagram_links = 0
+  #combine all the hashes together
+  consolidated_count_hash = count_hashes.inject{|memo,el| memo.merge(el){|k,old_v,new_v| old_v+new_v}}
 
-statuses.each do |status|
-  if status.uris?
-    tweets_with_uri_counts += 1
-    tweet_contains_instagram = false
-
-    status.uris.each do |url|
-      url_host = url.expanded_url.host
-      tweet_contains_instagram = url_host == 'www.instagram.com'
-      url_count_h[url_host] += 1
-    end
-
-    tweets_with_instagram_links += 1 if tweet_contains_instagram
+  # sort the hash by the value asc
+  # pop the last 10
+  # reverse it to make it a "Top 10"
+  # make it a hash
+  # print the results
+  consolidated_count_hash.sort_by { |k, v| v }.pop(10).reverse.to_h.each do |host, url_count|
+    count = count ? count+1 : 1
+    print_debug "##{count} - #{host} - #{url_count}"
   end
 end
 
-# print_debug("Url Processor elapsed seconds: #{url_processor.elapsed_time}")
+def print_counts(tweets,seconds_reading_the_stream)
+  print_debug "Tweets captured: #{tweets.length}"
+  print_debug "Seconds on the stream: #{seconds_reading_the_stream}"
+  print_debug "Avg tweets per second #{(tweets.length.to_f / seconds_reading_the_stream.to_f).round(2)}"
 
-print_debug("Tweets captured: #{statuses.length}")
-# print_debug("Seconds on the stream: #{secs_reading_the_stream}")
-print_debug("Avg tweets per second #{(statuses.length.to_f / STOP_AFTER_SECONDS.to_f).round(2)}")
-print_debug("Count of tweets containing a url: #{tweets_with_uri_counts}")
-print_debug("Percent of tweets containing a url: #{(tweets_with_uri_counts.to_f / statuses.length.to_f * 100.0).round(2)}%")
-print_debug("Tweets with instagram links: #{tweets_with_instagram_links}")
-print_debug("Percent of tweets with instagram links: #{(tweets_with_instagram_links.to_f / statuses.length.to_f * 100.0).round(2)}%")
+  tweets_with_uri_count = tweets.select {|x| x.contains_link?}.length
+  print_debug "Count of tweets containing a url: #{tweets_with_uri_count}"
+  print_debug "Percent of tweets containing a url: #{(tweets_with_uri_count.to_f / tweets.length.to_f * 100.0).round(2)}%"
 
-print_debug('Top 10 Domains:')
-count = 0
-url_count_h.sort_by { |_k, v| v }.pop(10).reverse.to_h.each do |k, v|
-  count += 1
-  print_debug("##{count} - #{k} - #{v}")
+  tweets_with_instagram_count = tweets.select{|x|x.contains_instagram_link?}.length
+  print_debug "Count of tweets with Instagram links: #{tweets_with_instagram_count}"
+  print_debug "Percent of tweets with instagram links: #{(tweets_with_instagram_count.to_f / tweets.length.to_f * 100.0).round(2)}%"
+
+  print_top_10_domains(tweets)
 end
+
+print_counts tweets,secs_reading_the_stream
 
 # print_debug("Total seconds elapsed: #{very_beginning.elapsed_time}")
