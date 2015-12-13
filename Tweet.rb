@@ -1,11 +1,16 @@
+require 'uri'
 class Tweet
-  def initialize(text,uris)
+  def initialize(text,urls)
     @text = text
-    @urls = uris
+    @urls = urls
   end
 
   def contains_link?
     !@urls.empty?
+  end
+
+  def contains_multiple_links?
+    contains_link? and @urls.count>1
   end
 
   def contains_instagram_link?
@@ -22,5 +27,16 @@ class Tweet
 
   def to_s
     "#{@text}\nUris:\n#{@urls.each {|x| x.to_s}}"
+  end
+
+  def self.from_json(json)
+    text = json['text']
+    urls = []
+
+    json['entities']['urls'].each do |url|
+      urls << URI(url['expanded_url'])
+    end
+
+    return Tweet.new(text,urls)
   end
 end
