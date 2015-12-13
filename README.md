@@ -24,20 +24,19 @@ Top 10 Domains:
 
 ## Gems Used
 ```ruby
-gem install tweetstream #https://github.com/tweetstream/tweetstream
+gem install eventmachine #https://github.com/eventmachine/eventmachine
 ```
 
 ## Config File
 Please add a `config.json` file to the root that looks like the example below.
 ```json
 {
-  "CONSUMER_KEY":"ABCDEF123456",
-  "CONSUMER_SECRET":"1234567",
-  "ACCESS_TOKEN":"abcdef12345",
-  "ACCESS_TOKEN_SECRET":"98765",
-  "STOP_AFTER_MINUTES":0.10
+  "CONSUMER_KEY": "ABCDEF123456",
+  "CONSUMER_SECRET": "1234567",
+  "ACCESS_TOKEN": "abcdef12345",
+  "ACCESS_TOKEN_SECRET": "98765",
+  "STOP_AFTER_MINUTES": 0.1,
+  "GARDENHOSE_API_URL": "https://stream.twitter.com/1.1/statuses/sample.json",
+  "DEBUGGING": true
 }
 ```
-## TODO
-1. Read this https://blog.engineyard.com/2013/ruby-concurrency
-1. Read this http://www.toptal.com/ruby/ruby-concurrency-and-parallelism-a-practical-primer
