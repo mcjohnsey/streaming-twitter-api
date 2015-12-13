@@ -36,7 +36,7 @@ Please add a `config.json` file to the root that looks like the example below.
   "CONSUMER_SECRET": "1234567",
   "ACCESS_TOKEN": "abcdef12345",
   "ACCESS_TOKEN_SECRET": "98765",
-  "STOP_AFTER_MINUTES": 0.1,
+  "STOP_AFTER_MINUTES": 10,
   "GARDENHOSE_API_URL": "https://stream.twitter.com/1.1/statuses/sample.json",
   "DEBUGGING": true
 }
