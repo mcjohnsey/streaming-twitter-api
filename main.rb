@@ -95,7 +95,7 @@ def read_via_direct_json
   tweets
 end
 
-stream_catcher = Stopwatch.new 'stream_catcher'
+stream_catcher = Stopwatch.new 'Time on the stream'
 tweets = read_via_direct_json
-secs_reading_the_stream = stream_catcher.elapsed_time.to_i
+secs_reading_the_stream = stream_catcher.elapsed_seconds
 print_stats tweets, secs_reading_the_stream
