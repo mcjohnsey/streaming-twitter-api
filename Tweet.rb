@@ -34,7 +34,8 @@ class Tweet
     urls = []
 
     json['entities']['urls'].each do |url|
-      urls << URI(url['expanded_url'])
+      expanded_url = URI(url['expanded_url']) rescue nil #only acknowledge legit expanded urls, if any problem parsing then just ignore the link
+      urls << expanded_url unless expanded_url.nil?
     end
 
     return Tweet.new(text,urls)
