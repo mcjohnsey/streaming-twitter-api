@@ -1,0 +1,9 @@
+{
+  "CONSUMER_KEY": "ABC",
+  "CONSUMER_SECRET": "ABC123",
+  "ACCESS_TOKEN": "ZXY",
+  "ACCESS_TOKEN_SECRET": "ZXY123",
+  "STOP_AFTER_MINUTES": 0.25,
+  "GARDENHOSE_API_URL": "https://stream.twitter.com/1.1/statuses/sample.json",
+  "DEBUGGING": true
+}
