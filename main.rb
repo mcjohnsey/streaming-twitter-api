@@ -118,4 +118,35 @@ def programming_problem
   print_stats tweets, secs_reading_the_stream
 end
 
+def grab_my_timeline
+  stream_items = []
+  stream = ''
+  new_line_regex = /.+\r\n/
+
+  # SEE https://dev.twitter.com/streaming/reference/get/user
+  user_stream_url = 'https://userstream.twitter.com/1.1/user.json'
+
+  query = {}
+  # this tells the API not only to listen to my user account but also to all my followings
+  # SEE https://dev.twitter.com/streaming/overview/request-parameters#with
+  query[:with] = 'followings'
+
+  opts = { query: query }
+
+  read_tweets_from_stream(user_stream_url, AUTH, STOP_AFTER_SECONDS, opts) do |chunk|
+    stream += chunk
+    while response = stream.slice!(new_line_regex)
+      stream_item = JSON.parse(response)
+      p stream_item['text'] if stream_item['text']
+      stream_items << stream_item
+      # if tweet['text'] # just grab responses with tweets (excludes things like deletes)
+      #   tweets << Tweet.from_json(tweet)
+      #   puts "Grabbed #{tweets.length} so far" if tweets.length % 50 == 0
+      # end
+    end
+  end
+
+  puts JSON.dump stream_items
+end
+
 programming_problem
